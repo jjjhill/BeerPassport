@@ -1,6 +1,6 @@
 
 var app = require('../app');
-var debug = require('debug')('rcafe:server');
+var debug = require('debug')('Passport:server');
 var http = require('http');
 
 
