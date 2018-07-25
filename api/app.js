@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors=require('cors');
 var beers = require('./routes/beers');
-var brewery = require('./routes/breweries');
+var breweries = require('./routes/breweries');
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
