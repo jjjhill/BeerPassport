@@ -2,10 +2,12 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Container, Header, Content, Footer, FooterTab, Button } from 'native-base';
 import BreweryMap from './pages/BreweryMap';
+import BreweryInput from './components/BreweryInput';
+import BeerInput from './components/BeerInput';
 
 export default class App extends React.Component {
   state = {
-    currentPage: 'beers',
+    currentPage: 'breweries',
   };
 
   render() {
@@ -13,7 +15,8 @@ export default class App extends React.Component {
       <Container id="container">
         <Header />
         <Content>
-          <Text>{this.state.currentPage}</Text>
+          {this.state.currentPage === 'breweries' && <BreweryInput />}
+          {this.state.currentPage === 'beers' && <BeerInput />}
         </Content>
         <Footer>
           <FooterTab>

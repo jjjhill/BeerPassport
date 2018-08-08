@@ -10,7 +10,7 @@ var Send={
   },
 
   addBrewery:function(body, callback){
-    return db.query("INSERT INTO breweries (name, city, visited, isRestaurant) VALUES (\'" + body.name + "\', \'" + body.city + "\', \'" + body.visited + "\', \'" + body.isRestaurant + "\')", callback);
+    return db.query("INSERT INTO breweries (name, city, visited, isRestaurant) VALUES (\'" + body.name + "\', \'" + body.city + "\', " + body.visited + ", " + body.isRestaurant + ")", callback);
   },
   deleteBrewery:function(query, callback) {
     return db.query("DELETE FROM breweries WHERE id = \'"+query.id+"\'", callback);

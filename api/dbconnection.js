@@ -1,5 +1,5 @@
 var mysql=require('mysql');
- var connection=mysql.createConnection({
+ var connection=mysql.createPool({
 
    host:'yikesdb.cos4tykb4agv.ca-central-1.rds.amazonaws.com',
    user:'jjjhill',
