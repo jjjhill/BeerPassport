@@ -1,19 +1,20 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
-import MapView from 'react-native-maps';
-import { RNS3 } from 'react-native-aws3';
-import ImagePicker from 'react-native-image-crop-picker';
+import { MapView } from 'expo';
 
 export default class BreweryMap extends React.Component {
-    selectPhoto() {
-        ImagePicker.openPicker().then(image => {
-          console.log(images);
-        });
-    }
 
     render() {
         return (
-            <Button style={{width: 50, height: 50}} onPress={this.selectPhoto}/>
+            <MapView
+              style={{ flex: 1 }}
+              initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            />
         );
     }
 }

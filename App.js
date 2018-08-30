@@ -17,8 +17,10 @@ export default class App extends React.Component {
       <Container id="container">
         <Header />
         <Content>
-          {this.state.currentPage === 'breweries' && <BreweryInput />}
+          {/*this.state.currentPage === 'breweries' && <BreweryInput />*/}
+          {this.state.currentPage === 'breweries' && <ImageViewer />}
           {this.state.currentPage === 'beers' && <BeerInput />}
+          {this.state.currentPage === 'map' && <BreweryMap />}
         </Content>
         <Footer>
           <FooterTab>

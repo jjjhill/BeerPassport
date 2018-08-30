@@ -37,7 +37,7 @@ export default class beerInput extends React.Component {
       },
       body: JSON.stringify({
         name: this.state.beerName,
-        brewery: this.state.breweryId,
+        breweryId: this.state.breweryId,
         type: this.state.type,
         abv: this.state.abv,
         ibu: this.state.ibu,
@@ -92,7 +92,7 @@ export default class beerInput extends React.Component {
           style={{ borderColor: "black", borderWidth: 1, }}
           onChangeText={(e) => this.setState({ rating: e })}
           value={this.state.rating.toString()}
-          type="number"
+          type="numeric"
         />
         <Button
           title="Submit beer"

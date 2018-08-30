@@ -1,5 +1,14 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "android": {
+	  "package": "com.BeerPassport",
+      "versionCode": 1,
+      "config": {
+      	"googleMaps": {
+      		"apiKey": "AIzaSyAwLU8vCd3g2wAbWK8Y7MHybREhDdRmTi4",
+      	},
+      },
+    },
   }
 }
