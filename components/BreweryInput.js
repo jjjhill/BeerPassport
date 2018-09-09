@@ -16,9 +16,8 @@ export default class BreweryInput extends React.Component {
   }
 
   submitBreweryInfo() {
-    let url = 'http://ec2-35-182-236-215.ca-central-1.compute.amazonaws.com:3000/breweries/';
-    //let url = '192.168.1.105:3000/breweries'; //for android emulator
-    fetch(url, {
+    let url = 'http://ec2-35-183-0-240.ca-central-1.compute.amazonaws.com:3000/';
+    fetch(url + 'breweries', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

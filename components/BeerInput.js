@@ -3,8 +3,8 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 import { Input, CheckBox, Picker } from 'native-base';
 import axios from 'axios';
 
-var url = 'http://ec2-35-182-236-215.ca-central-1.compute.amazonaws.com:3000/';
-export default class beerInput extends React.Component {
+var url = 'http://ec2-35-183-0-240.ca-central-1.compute.amazonaws.com:3000/';
+export default class BeerInput extends React.Component {
 
   constructor(props) {
     super(props);

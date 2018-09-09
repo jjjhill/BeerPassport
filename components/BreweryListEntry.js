@@ -4,9 +4,23 @@ import { StyleSheet, Text, View } from 'react-native';
 export default class BreweryListEntry extends React.Component {
   render() {
     return (
-        <View style={{margin: 5, marginLeft: 10, marginRight: 10, padding: 10, height:100,
-            backgroundColor:'red', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-            <View style={{borderColor: 'black', borderWidth: 1, height: 60, width: 40}}>
+        <View style={{padding: 20, height:100, backgroundColor:'white', 
+          borderBottomColor: 'silver', borderBottomWidth: 1,
+          flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+            <View>
+                <Text style={{color:'black', fontSize: 20}}>
+                    {this.props.item.name}
+                </Text>
+                <Text style={{color:'black', fontSize: 16}}>
+                    {this.props.item.city}
+                </Text>
+            </View>
+        </View>
+
+
+/*        <View style={{margin: 5, marginLeft: 10, marginRight: 10, padding: 10, height:100,
+            backgroundColor:'lightgoldenrodyellow', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <View style={{height: 60, width: 40}}>
                 <View style={{backgroundColor: 'green',
                     height: 40, width: 40}}>
                     <Text style={{textAlign: 'center', fontSize: 10}}>
@@ -17,12 +31,13 @@ export default class BreweryListEntry extends React.Component {
                     </Text>
                 </View>
                 <Text style={{textAlign: 'center', fontSize: 12}}>
-                        City
+                    {this.props.item.city}
                 </Text>
             </View>
             <Text style={{textAlign: 'center', fontSize: 26}}>
-                BreweryName
+                {this.props.item.name}
             </Text>
+            <View/>
             <View style={{backgroundColor: 'blue', height: 40, width: 40}}>
                 <Text style={{textAlign: 'center', fontSize: 8}}>
                     Restaurant
@@ -32,6 +47,7 @@ export default class BreweryListEntry extends React.Component {
                 </Text>
             </View>
         </View>
+*/
     );
   }
 }
