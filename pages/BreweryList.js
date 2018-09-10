@@ -26,7 +26,7 @@ export default class BreweryList extends React.Component {
 				<FlatList
 				  data={this.state.breweries}
 				  keyExtractor={item => item.id.toString()}
-				  renderItem={({item}) => <BreweryListEntry item={item}/>}
+				  renderItem={({item}) => <BreweryListEntry item={item} breweryPress={this.props.breweryPress}/>}
 				/>
 			</View>
 		);

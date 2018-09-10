@@ -13,6 +13,7 @@ import { FloatingAction } from 'react-native-floating-action';
 export default class App extends React.Component {
   state = {
     currentPage: 'breweryList',
+    currentBreweryId: 0,
   };
 
   getHeader() {
@@ -44,33 +45,40 @@ export default class App extends React.Component {
   }
   onHeaderButtonPress = this.onHeaderButtonPress.bind(this);
 
+  onBreweryButtonPress(id) {
+    this.setState({ currentPage: 'breweryPage', currentBreweryId: id });
+  }
+
   render() {
     return (
       <Container id="container">
-        <Header style={{ justifyContent:'center', alignItems:'center', height: 60 }}>
+        <Header style={{ backgroundColor: '#751d00',
+          justifyContent:'center', alignItems:'center', height: 80 }}>
             <Text style={{ color:'white', fontSize: 25, fontWeight: 'bold' }}>
                 {this.getHeader()}
             </Text>
             {(this.state.currentPage === 'beerList' || this.state.currentPage === 'breweryList') &&
-            <Button onPress={this.onHeaderButtonPress} style={{ position: 'absolute', right: 10 }}>
+            <Button onPress={this.onHeaderButtonPress} style={{ position: 'absolute', right: 10,
+              backgroundColor: '#751d00' }}>
                 <Text style={{ fontSize:35, color:'white' }}>+</Text>
             </Button>}
         </Header>
         <Content>
-          {this.state.currentPage === 'breweryList' && <BreweryList />}
-          {this.state.currentPage === 'beerList' && <BeerList />}
+          {this.state.currentPage === 'breweryList' && <BreweryList breweryPress={this.onBreweryButtonPress}/>}
+          {this.state.currentPage === 'beerList' && <BeerList breweryId='all'/>}
           {this.state.currentPage === 'breweryInput' && <BreweryInput />}
           {this.state.currentPage === 'beerInput' && <BeerInput />}
+          {this.state.currentPage === 'breweryPage' && <BreweryPage breweryId={this.state.currentBreweryId}/>}
         </Content>
         <Footer>
-          <FooterTab>
+          <FooterTab style={{ backgroundColor: '#751d00'}}>
             <Button onPress={() => this.setState({ currentPage: 'breweryList' })}>
               <Text style={{ color: 'white' }}>Breweries</Text>
             </Button>
             <Button onPress={() => this.setState({ currentPage: 'beerList' })}>
               <Text style={{ color: 'white' }}>Beers</Text>
             </Button>
-            <Button onPress={() => this.setState({ currentPage: 'map' })} active>
+            <Button style={{ backgroundColor: '#751d00'}} onPress={() => this.setState({ currentPage: 'map' })} active>
               <Text style={{ color: 'white' }}>Map</Text>
             </Button>
           </FooterTab>

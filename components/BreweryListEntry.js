@@ -4,8 +4,8 @@ import { StyleSheet, Text, View } from 'react-native';
 export default class BreweryListEntry extends React.Component {
   render() {
     return (
-        <View style={{padding: 20, height:100, backgroundColor:'white', 
-          borderBottomColor: 'silver', borderBottomWidth: 1,
+        <View onPress={() => this.props.breweryPress(this.props.item.id)} style={{padding: 20, height:100, backgroundColor:'white', 
+          borderBottomColor: 'silver', borderBottomWidth: 1, borderBottomStartRadius: 80,
           flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
             <View>
                 <Text style={{color:'black', fontSize: 20}}>
