@@ -3,7 +3,10 @@ var db=require('../dbconnection');
 var Retrieve={
 
   getAllBeers:function(callback) {
-    return db.query("SELECT name FROM breweries RIGHT JOIN beers ON beers.breweryId = breweries.id", callback);
+    return db.query(`SELECT breweries.name AS breweryName, beers.*
+      FROM breweries, beers
+      WHERE breweries.id = beers.breweryId`
+    , callback);
   },
 
   getBeerById:function(id, callback) {
@@ -11,7 +14,7 @@ var Retrieve={
   },
 
   getBeersByBreweryId:function(id, callback) {
-    return db.query("SELECT * FROM beers WHERE breweryId = " + id)
+    return db.query("SELECT * FROM beers WHERE breweryId = " + id, callback)
   },
 
   getAllBreweries:function(callback) {

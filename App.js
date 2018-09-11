@@ -12,7 +12,7 @@ import { FloatingAction } from 'react-native-floating-action';
 
 export default class App extends React.Component {
   state = {
-    currentPage: 'breweryList',
+    currentPage: 'beerList',
   };
 
   getHeader() {
