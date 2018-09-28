@@ -3,6 +3,17 @@ var router = express.Router();
 var Retrieve= require('../models/Retrieve');
 var Send= require('../models/Send');
 
+router.get('/brewery/:id', function(req, res, next) {
+    Retrieve.getBeersByBreweryId(req.params.id, function(err, rows){
+      if (err) {
+        res.json(err);
+      }
+      else {
+        res.json(rows);
+      }
+    });
+});
+
 router.get('/:id?', function(req, res, next) {
   if (req.params.id) {
     Retrieve.getBeerById(req.params.id, function(err, rows){
@@ -24,17 +35,6 @@ router.get('/:id?', function(req, res, next) {
       }
     });
   }
-});
-
-router.get('/brewery/:id', function(req, res, next) {
-    Retrieve.getBeersByBreweryId(req.params.id, function(err, rows){
-      if (err) {
-        res.json(err);
-      }
-      else {
-        res.json(rows);
-      }
-    });
 });
 
 router.post('/', function(req, res, next) {
