@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
 import { Input, CheckBox, Picker, Button } from 'native-base';
-import axios from 'axios';
 import BreweryListEntry from './../components/BreweryListEntry';
 
 var url = 'http://ec2-35-183-0-240.ca-central-1.compute.amazonaws.com:3000/';

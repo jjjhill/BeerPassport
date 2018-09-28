@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import { Input, CheckBox, Picker } from 'native-base';
-import axios from 'axios';
 
 var url = 'http://ec2-35-183-0-240.ca-central-1.compute.amazonaws.com:3000/';
 export default class BeerInput extends React.Component {
@@ -37,7 +36,7 @@ export default class BeerInput extends React.Component {
       },
       body: JSON.stringify({
         name: this.state.beerName,
-        brewery: this.state.breweryId,
+        breweryId: this.state.breweryId,
         type: this.state.type,
         abv: this.state.abv,
         ibu: this.state.ibu,
@@ -65,7 +64,10 @@ export default class BeerInput extends React.Component {
           mode="dropdown"
           style={{ flex: 1 }}
           selectedValue={this.state.breweryId}
-          onValueChange={(val) => this.setState({ breweryId: val })}
+          onValueChange={(val) => {
+            console.log(val);
+            this.setState({ breweryId: val })
+          }}
         >
           {this.state.breweries.map((item) => (<Picker.Item key={item.id} label={item.name} value={item.id}/>)) }
         </Picker>

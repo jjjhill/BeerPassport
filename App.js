@@ -8,12 +8,14 @@ import BreweryInput from './components/BreweryInput';
 import BeerInput from './components/BeerInput';
 import BreweryList from './pages/BreweryList';
 import BeerList from './pages/BeerList';
+import BreweryPage from './pages/BreweryPage';
 import { FloatingAction } from 'react-native-floating-action';
 
 export default class App extends React.Component {
   state = {
     currentPage: 'breweryList',
     currentBreweryId: 0,
+    currentBreweryName: '',
   };
 
   getHeader() {
@@ -25,7 +27,9 @@ export default class App extends React.Component {
         case 'breweryInput':
             return 'Enter a Brewery';
         case 'beerInput':
-            return 'Enter a Beer';
+            return 'Enter a Beer';  
+        case 'breweryPage':
+            return <Text>{this.state.currentBreweryName}</Text>;
         default:
             return 'shit\'s broke';
     }
@@ -45,9 +49,10 @@ export default class App extends React.Component {
   }
   onHeaderButtonPress = this.onHeaderButtonPress.bind(this);
 
-  onBreweryButtonPress(id) {
-    this.setState({ currentPage: 'breweryPage', currentBreweryId: id });
+  onBreweryButtonPress(brewery) {
+    this.setState({ currentPage: 'breweryPage', currentBreweryId: brewery.id, currentBreweryName: brewery.name });
   }
+  onBreweryButtonPress = this.onBreweryButtonPress.bind(this);
 
   render() {
     return (
@@ -87,13 +92,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'gold',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'stretch'
-  },
-});

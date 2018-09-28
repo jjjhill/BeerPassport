@@ -11,7 +11,7 @@ var Retrieve={
   },
 
   getBeersByBreweryId:function(id, callback) {
-    return db.query("SELECT * FROM beers WHERE breweryId = " + id)
+    return db.query("SELECT * FROM beers WHERE breweryId = " + id, callback)
   },
 
   getAllBreweries:function(callback) {

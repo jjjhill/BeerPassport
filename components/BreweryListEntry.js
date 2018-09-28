@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default class BreweryListEntry extends React.Component {
   render() {
     return (
-        <View onPress={() => this.props.breweryPress(this.props.item.id)} style={{padding: 20, height:100, backgroundColor:'white', 
+        <TouchableOpacity onPress={() => this.props.breweryPress(this.props.item)} style={{padding: 20, height:100, backgroundColor:'white', 
           borderBottomColor: 'silver', borderBottomWidth: 1, borderBottomStartRadius: 80,
           flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
             <View>
@@ -15,7 +15,7 @@ export default class BreweryListEntry extends React.Component {
                     {this.props.item.city}
                 </Text>
             </View>
-        </View>
+        </TouchableOpacity>
 
 
 /*        <View style={{margin: 5, marginLeft: 10, marginRight: 10, padding: 10, height:100,

@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import { Input, CheckBox } from 'native-base';
-import axios from 'axios';
 
 export default class BreweryInput extends React.Component {
 
