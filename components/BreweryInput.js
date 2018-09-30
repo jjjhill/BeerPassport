@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert } from 'react-native';
 import { Input, CheckBox } from 'native-base';
 import axios from 'axios';
 
@@ -31,10 +31,22 @@ export default class BreweryInput extends React.Component {
       })
     })
     .then((res) => res.json())
-    .then((res) => console.log(res))
-    .catch((error) => {
-      console.error(error);
-    });
+    .then((res) => Alert.alert(
+      'Success',
+      'Brewery Submitted.',
+      [
+        {text: 'OK', onPress: () => {}},
+      ],
+      { cancelable: true })
+    )
+    .catch((error) =>  Alert.alert(
+      'Failure',
+      JSON.stringify(error),
+      [
+        {text: 'OK', onPress: () => {}},
+      ],
+      { cancelable: true })
+    );
   }
 
 	render() {

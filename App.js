@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Platform } from 'react-native';
 import { Container, Header, Content, Footer, FooterTab, Button, Left, Right, Body, Title } from 'native-base';
 import BreweryListEntry from './components/BreweryListEntry';
 import BeerListEntry from './components/BeerListEntry';
@@ -8,7 +8,7 @@ import BreweryInput from './components/BreweryInput';
 import BeerInput from './components/BeerInput';
 import BreweryList from './pages/BreweryList';
 import BeerList from './pages/BeerList';
-import { FloatingAction } from 'react-native-floating-action';
+
 
 export default class App extends React.Component {
   state = {
