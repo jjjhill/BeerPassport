@@ -1,14 +1,43 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, Slider } from 'react-native';
 import { srmToRGB } from '../helpers';
+
+var url = 'http://ec2-35-183-0-240.ca-central-1.compute.amazonaws.com:3000/';
 export default class BreweryListEntry extends React.Component {
     state = {
         showSlider: false,
-        sliderValue: 4,
+        sliderValue: this.props.item.srm,
     }
 
     toggleSlider = () => this.setState({ showSlider: !this.state.showSlider });
-    updateSRM = val => this.setState({ sliderValue: val });
+
+    updateSRM(val) {
+        this.setState({ sliderValue: val });
+    }
+
+    updateBackend(id, val) {
+        fetch(url+'beers', {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            beerId: id,
+            srm: val
+          })
+        })
+        .then((res) => res.json())
+        .then((res) => console.log(res))
+        .catch((error) =>  Alert.alert(
+          'Failure to update SRM',
+          JSON.stringify(error),
+          [
+            {text: 'OK', onPress: () => {}},
+          ],
+          { cancelable: true })
+        );
+    }
 
     render() {
         return (
@@ -49,7 +78,8 @@ export default class BreweryListEntry extends React.Component {
                         <Slider
                             style={{ alignSelf:'stretch', height: 30, flex: 1 }}
                             value={this.state.sliderValue}
-                            onValueChange={this.updateSRM}
+                            onValueChange={(val) => this.updateSRM(val)}
+                            onSlidingComplete={(val) => this.updateBackend(this.props.item.id, val)}
                             minimumValue={1}
                             maximumValue={40}
                         />
