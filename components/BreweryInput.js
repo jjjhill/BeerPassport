@@ -8,10 +8,42 @@ export default class BreweryInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      breweries: [],
       breweryName: "Innocente",
       breweryCity: "Waterloo",
       visited: false,
       isRestaurant: false,
+    }
+  }
+
+  componentDidMount() {
+    fetch(url + 'breweries')
+    .then((res) => res.json())
+    .then((res) => this.setState({ breweries: res }))
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+  verifyDuplicate() {
+    let duplicate = false;
+    this.state.breweries.forEach((brewery, i, a) => {
+      let first = brewery.name.split(" ")[0];
+      if (this.state.breweryName.includes(first) || first.includes(this.state.breweryName)) {
+        duplicate=true;
+      }
+    });
+    if (!duplicate) {
+      this.submitBreweryInfo();
+    } else {
+      Alert.alert(
+        'Duplicate detected',
+        'Did we submit this one already?',
+        [
+          {text: 'OK', onPress: () => {}},
+          {text: 'Submit Anyway', onPress: () => this.submitBreweryInfo()},
+        ],
+        { cancelable: true });
     }
   }
 
@@ -78,7 +110,7 @@ export default class BreweryInput extends React.Component {
         />
         <Button
           title="Submit Brewery"
-          onPress={() => this.submitBreweryInfo()}
+          onPress={() => this.verifyDuplicate()}
         />
       </View>
     );

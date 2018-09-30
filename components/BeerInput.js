@@ -75,7 +75,6 @@ export default class BeerInput extends React.Component {
     );
   }
   verifyDuplicate() {
-    console.log(this.state.beers);
     let duplicate = false;
     this.state.beers.forEach((beer, i, a) => {
       let first = beer.name.split(" ")[0];
