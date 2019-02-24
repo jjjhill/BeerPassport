@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert } from 'react-native';
 import { Input, CheckBox, Picker } from 'native-base';
 
 var url = 'http://ec2-35-183-0-240.ca-central-1.compute.amazonaws.com:3000/';
@@ -8,9 +8,10 @@ export default class BeerInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      beers: [],
       breweries: [],
       beerName: "Dubbel Vision",
-      breweryId: 0,
+      breweryId: null,
       type: 'Dubbel',
       abv: 5.0,
       ibu: 10,
@@ -18,16 +19,27 @@ export default class BeerInput extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     fetch(url + 'breweries')
     .then((res) => res.json())
-    .then((res) => this.setState({ breweries: res }))
+    .then((res) => {
+      this.setState({ breweries: res }, () => {
+        let firstID = this.state.breweries[0].id;
+        fetch(url + 'beers/brewery/'+firstID)
+        .then((res) => res.json())
+        .then((res) => {
+          this.setState({ beers: res, breweryId: firstID});
+        })
+        .catch((error) => {
+          Alert.alert('Yikes');
+        });
+      });
+    })
     .catch((error) => {
       console.error(error);
     });
   }
-
-  submitBeerInfo() {
+  submitBeer() {
     fetch(url+'beers', {
       method: 'POST',
       headers: {
@@ -44,9 +56,52 @@ export default class BeerInput extends React.Component {
       })
     })
     .then((res) => res.json())
-    .then((res) => console.log(res))
+    .then((res) => Alert.alert(
+      'Success',
+      'Beer Submitted.',
+      [
+        {text: 'OK', onPress: () => {}},
+      ],
+      { cancelable: true })
+    )
+    .catch((error) =>  Alert.alert(
+      'Failure',
+      JSON.stringify(error),
+      [
+        {text: 'OK', onPress: () => {}},
+      ],
+      { cancelable: true })
+    );
+  }
+  verifyDuplicate() {
+    let duplicate = false;
+    this.state.beers.forEach((beer, i, a) => {
+      let first = beer.name.split(" ")[0];
+      if (this.state.beerName.includes(first) || first.includes(this.state.beerName)) {
+        duplicate=true;
+      }
+    });
+    if (!duplicate) {
+      this.submitBeer();
+    } else {
+      Alert.alert(
+        'Duplicate detected',
+        'Did we submit this one already?',
+        [
+          {text: 'OK', onPress: () => {}},
+          {text: 'Submit Anyway', onPress: () => this.submitBeer()},
+        ],
+        { cancelable: true });
+    }
+  }
+
+  changeBrewery(val) {
+    this.setState({ breweryId: val });
+    fetch(url + 'beers/brewery/'+val)
+    .then((res) => res.json())
+    .then((res) => this.setState({ beers: res }))
     .catch((error) => {
-      console.error(error);
+      Alert.alert(JSON.stringify(error));
     });
   }
 
@@ -64,10 +119,7 @@ export default class BeerInput extends React.Component {
           mode="dropdown"
           style={{ flex: 1 }}
           selectedValue={this.state.breweryId}
-          onValueChange={(val) => {
-            console.log(val);
-            this.setState({ breweryId: val })
-          }}
+          onValueChange={(val) => this.changeBrewery(val)}
         >
           {this.state.breweries.map((item) => (<Picker.Item key={item.id} label={item.name} value={item.id}/>)) }
         </Picker>
@@ -98,7 +150,7 @@ export default class BeerInput extends React.Component {
         />
         <Button
           title="Submit beer"
-          onPress={() => this.submitBeerInfo()}
+          onPress={() => this.verifyDuplicate()}
         />
       </View>
     );

@@ -10,7 +10,6 @@ import BeerInput from './components/BeerInput';
 import BreweryList from './pages/BreweryList';
 import BeerList from './pages/BeerList';
 import BreweryPage from './pages/BreweryPage';
-import { FloatingAction } from 'react-native-floating-action';
 
 export default class App extends React.Component {
   state = {

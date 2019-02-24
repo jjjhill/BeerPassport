@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert } from 'react-native';
 import { Input, CheckBox } from 'native-base';
 
 export default class BreweryInput extends React.Component {
@@ -7,10 +7,42 @@ export default class BreweryInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      breweries: [],
       breweryName: "Innocente",
       breweryCity: "Waterloo",
       visited: false,
       isRestaurant: false,
+    }
+  }
+
+  componentDidMount() {
+    fetch(url + 'breweries')
+    .then((res) => res.json())
+    .then((res) => this.setState({ breweries: res }))
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+  verifyDuplicate() {
+    let duplicate = false;
+    this.state.breweries.forEach((brewery, i, a) => {
+      let first = brewery.name.split(" ")[0];
+      if (this.state.breweryName.includes(first) || first.includes(this.state.breweryName)) {
+        duplicate=true;
+      }
+    });
+    if (!duplicate) {
+      this.submitBreweryInfo();
+    } else {
+      Alert.alert(
+        'Duplicate detected',
+        'Did we submit this one already?',
+        [
+          {text: 'OK', onPress: () => {}},
+          {text: 'Submit Anyway', onPress: () => this.submitBreweryInfo()},
+        ],
+        { cancelable: true });
     }
   }
 
@@ -30,10 +62,22 @@ export default class BreweryInput extends React.Component {
       })
     })
     .then((res) => res.json())
-    .then((res) => console.log(res))
-    .catch((error) => {
-      console.error(error);
-    });
+    .then((res) => Alert.alert(
+      'Success',
+      'Brewery Submitted.',
+      [
+        {text: 'OK', onPress: () => {}},
+      ],
+      { cancelable: true })
+    )
+    .catch((error) =>  Alert.alert(
+      'Failure',
+      JSON.stringify(error),
+      [
+        {text: 'OK', onPress: () => {}},
+      ],
+      { cancelable: true })
+    );
   }
 
 	render() {
@@ -65,7 +109,7 @@ export default class BreweryInput extends React.Component {
         />
         <Button
           title="Submit Brewery"
-          onPress={() => this.submitBreweryInfo()}
+          onPress={() => this.verifyDuplicate()}
         />
       </View>
     );

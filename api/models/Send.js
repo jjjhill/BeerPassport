@@ -5,6 +5,9 @@ var Send={
   addBeer:function(body, callback){
     return db.query("INSERT INTO beers (name, type, abv, ibu, breweryId, rating) VALUES (\'" + body.name + "\', \'" + body.type + "\',  \'" + body.abv + "\',\'" + body.ibu + "\', \'" + body.breweryId + "\', \'" + body.rating + "\')", callback);
   },
+  editBeerColor:function(body, callback){
+    return db.query("UPDATE beers set srm=" + body.srm + " where id=" + body.beerId, callback);
+  },
   deleteBeer:function(query, callback) {
     return db.query("DELETE FROM beers WHERE id = \'"+query.id+"\'", callback);
   },
