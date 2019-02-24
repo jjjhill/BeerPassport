@@ -7,6 +7,7 @@ var url = 'http://ec2-35-183-0-240.ca-central-1.compute.amazonaws.com:3000/';
 export default class BeerList extends React.Component {
 
 	state={
+		allBeers: [],
 		beers: []
 	};
 
@@ -15,7 +16,7 @@ export default class BeerList extends React.Component {
 		if (this.props.breweryId === 'all') {
 			fetch(url + 'beers')
 		    .then((res) => res.json())
-		    .then((res) => this.setState({ beers: res }))
+		    .then((res) => this.setState({ allBeers: res, beers: res }))
 		    .catch((error) => {
 		      console.error(error);
 		    });
@@ -30,10 +31,19 @@ export default class BeerList extends React.Component {
 	    }
     }
 
+    static getDerivedStateFromProps(props, state) {
+    	return { beers: state.allBeers.filter(function(beer) {
+				return beer.name.toLowerCase().indexOf(props.query.toLowerCase()) > -1
+		 	})
+    	};
+    }
+
     render() {
 		return (
 			<View>
 				<FlatList
+				  keyboardShouldPersistTaps={'always'}
+				  keyboardDismissMode={'on-drag'}
 				  data={this.state.beers}
 				  keyExtractor={item => item.id.toString()}
 				  renderItem={({item}) => <BeerListEntry item={item} 
