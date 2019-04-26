@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Slider } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Slider, Alert } from 'react-native';
 import { srmToRGB } from '../helpers';
 
 var url = 'http://ec2-35-183-0-240.ca-central-1.compute.amazonaws.com:3000/';
@@ -39,9 +39,26 @@ export default class BreweryListEntry extends React.Component {
         );
     }
 
+    openEditDialog() {
+        Alert.alert('What do',
+            'yah yonder?',
+            [
+                {text: 'Edit', onPress: () => this.beginEdit(), style: 'cancel'},
+                {text: 'Delete', onPress: () => {
+                    fetch(url, {
+                      method: 'delete',
+                      body: JSON.stringify({id: this.props.item.id})
+                    })
+                    .then(res => res.json())
+                    .then(res => Alert.alert(res))
+                }},
+            ]
+        )
+    }
+
     render() {
         return (
-            <View style={{padding: 10, height:100, backgroundColor:'white', 
+            <TouchableOpacity onLongPress={() => this.openEditDialog()} activeOpacity={0.9} style={{padding: 10, height:100, backgroundColor:'white', 
               borderBottomColor: 'silver', borderBottomWidth: 1,
               flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
                 <TouchableOpacity style={{width:70, height:70, zIndex:1, marginRight:15}} onPress={() => this.toggleSlider()}>
@@ -88,7 +105,7 @@ export default class BreweryListEntry extends React.Component {
                         </View>
                     </View>
                 }
-            </View>
+            </TouchableOpacity>
         );
     }
 }

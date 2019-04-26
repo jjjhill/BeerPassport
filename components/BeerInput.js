@@ -10,11 +10,11 @@ export default class BeerInput extends React.Component {
     this.state = {
       beers: [],
       breweries: [],
-      beerName: "Dubbel Vision",
+      beerName: "",
       breweryId: null,
-      type: 'Dubbel',
-      abv: 5.0,
-      ibu: 10,
+      type: "",
+      abv: 0,
+      ibu: 0,
       rating: 0,
     }
   }
@@ -31,12 +31,12 @@ export default class BeerInput extends React.Component {
           this.setState({ beers: res, breweryId: firstID});
         })
         .catch((error) => {
-          Alert.alert('Yikes');
+          Alert.alert(error);
         });
       });
     })
     .catch((error) => {
-      console.error(error);
+      Alert.alert(error);
     });
   }
   submitBeer() {
@@ -110,6 +110,7 @@ export default class BeerInput extends React.Component {
       <View style={{ padding: 5 }}>
         <Text>Beer Name</Text>
         <Input
+          placeholder="Dubbel Vision"
           style={{ borderColor: "black", borderWidth: 1, }}
           onChangeText={(e) => this.setState({ beerName: e })}
           value={this.state.beerName}
@@ -125,6 +126,7 @@ export default class BeerInput extends React.Component {
         </Picker>
         <Text>Type</Text>
         <Input
+          placeholder="Belgian Dubbel"
           style={{ borderColor: "black", borderWidth: 1, }}
           onChangeText={(e) => this.setState({ type: e })}
           value={this.state.type}
@@ -133,20 +135,22 @@ export default class BeerInput extends React.Component {
         <Input
           style={{ borderColor: "black", borderWidth: 1, }}
           onChangeText={(e) => this.setState({ abv: e })}
-          value={this.state.abv.toString()}
+          value={this.state.abv === 0 ? "" : this.state.abv.toString()}
+          keyboardType="numeric"
         />
         <Text>IBU</Text>
         <Input
           style={{ borderColor: "black", borderWidth: 1, }}
           onChangeText={(e) => this.setState({ ibu: e })}
-          value={this.state.ibu.toString()}
+          value={this.state.ibu === 0 ? "" : this.state.ibu.toString()}
+          keyboardType="numeric"
         />
         <Text>Rating</Text>
         <Input
           style={{ borderColor: "black", borderWidth: 1, }}
           onChangeText={(e) => this.setState({ rating: e })}
-          value={this.state.rating.toString()}
-          type="number"
+          value={this.state.rating === 0 ? "" : this.state.rating.toString()}
+          keyboardType="numeric"
         />
         <Button
           title="Submit beer"

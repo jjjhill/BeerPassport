@@ -37,7 +37,7 @@ export default class BeerList extends React.Component {
 				  data={this.state.beers}
 				  keyExtractor={item => item.id.toString()}
 				  renderItem={({item}) => <BeerListEntry item={item} 
-				  	 needBreweryName={this.props.breweryId === 'all' ? true : false}/>}
+				  needBreweryName={this.props.breweryId === 'all' ? true : false}/>}
 				/>
 			</View>
 		);

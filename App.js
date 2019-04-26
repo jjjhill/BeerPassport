@@ -1,14 +1,15 @@
 import React from 'react';
-import { StyleSheet, View, Text, Platform } from 'react-native';
+import { StyleSheet, View, Text, Platform, BackHandler } from 'react-native';
 import { Container, Header, Content, Footer, FooterTab, Button, Left, Right, Body, Title } from 'native-base';
 import BreweryListEntry from './components/BreweryListEntry';
 import BeerListEntry from './components/BeerListEntry';
-import BreweryMap from './pages/BreweryMap';
+//import BreweryMap from './pages/BreweryMap';
 import BreweryInput from './components/BreweryInput';
 import BeerInput from './components/BeerInput';
 import BreweryList from './pages/BreweryList';
 import BeerList from './pages/BeerList';
 import BreweryPage from './pages/BreweryPage';
+import StateManager from './stateManager.js';
 
 export default class App extends React.Component {
   state = {
@@ -17,33 +18,46 @@ export default class App extends React.Component {
     currentBreweryName: '',
   };
 
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  handleBackPress = () => {
+    StateManager.revertState();
+    return true;
+  }
+
   getHeader() {
     switch (this.state.currentPage) {
-        case 'breweryList':
-            return 'List of Breweries';
-        case 'beerList':
-            return 'List of Beers';
-        case 'breweryInput':
-            return 'Enter a Brewery';
-        case 'beerInput':
-            return 'Enter a Beer';  
-        case 'breweryPage':
-            return <Text>{this.state.currentBreweryName}</Text>;
-        default:
-            return 'shit\'s broke';
+      case 'breweryList':
+        return 'List of Breweries';
+      case 'beerList':
+        return 'List of Beers';
+      case 'breweryInput':
+        return 'Enter a Brewery';
+      case 'beerInput':
+        return 'Enter a Beer';  
+      case 'breweryPage':
+        return <Text>{this.state.currentBreweryName}</Text>;
+      default:
+        return 'shit\'s broke';
     }
   }
 
   onHeaderButtonPress() {
     switch (this.state.currentPage) {
-        case 'breweryList':
-            this.setState({ currentPage: 'breweryInput' });
-            break;
-        case 'beerList':
-            this.setState({ currentPage: 'beerInput' });
-            break;
-        default:
-            return false;
+      case 'breweryList':
+        this.setState({ currentPage: 'breweryInput' });
+        break;
+      case 'beerList':
+        this.setState({ currentPage: 'beerInput' });
+        break;
+      default:
+        return false;
     }
   }
   onHeaderButtonPress = this.onHeaderButtonPress.bind(this);

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Button, Alert } from 'react-native';
 import { Input, CheckBox } from 'native-base';
 
+var url = 'http://ec2-35-183-0-240.ca-central-1.compute.amazonaws.com:3000/';
 export default class BreweryInput extends React.Component {
 
   constructor(props) {
@@ -85,12 +86,14 @@ export default class BreweryInput extends React.Component {
       <View style={{ padding: 5 }}>
         <Text>Brewery Name</Text>
         <Input
+          placeholder="Innocente"
           style={{ borderColor: "black", borderWidth: 1, }}
           onChangeText={(e) => this.setState({ breweryName: e })}
           value={this.state.breweryName}
         />
         <Text>City</Text>
         <Input
+          placeholder="Waterloo"
           style={{ borderColor: "black", borderWidth: 1, }}
           onChangeText={(e) => this.setState({ breweryCity: e })}
           value={this.state.breweryCity}
